@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>UNISYS HTML Assessment Test Questionnaire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main-div">
+        <header class="header">
+            <div class="menu-icon for-desk"><i class="fa fa-bars" aria-hidden="true"></i></div>
+            <div class="menu-icon for-mob"><i class="fa fa-bars" aria-hidden="true"></i></div>
+            <script>
+                //left menu expand
+                $(document).ready(function () {
+                    $(".menu-icon.for-desk").on("click", function () {
+                        $(".main-section").toggleClass("expand-left-menu");
+                        $(this).toggleClass("active");
+                    });
+                });
+            </script>
+            <script>
+                //left menu expand
+                $(document).ready(function () {
+                    $(".menu-icon.for-mob").on("click", function () {
+                        $(".left-menu").slideToggle();
+                        $(this).toggleClass("active");
+                    });
+                });
+            </script>
+
+
+            <h1>Assignment</h1>
+            <select class="language-select">
+                <option value="en" class="test" data-thumbnail="images/en.png">EN</option>
+                <option value="FR" data-thumbnail="images/fra.png">FR</option>
+                <option value="GE" data-thumbnail="images/ger.png">GE</option>
+                <option value="RU" data-thumbnail="images/rus.png">RU</option>
+            </select>
+            <div class="lang-select">
+                <button class="btn-select" value=""></button>
+                <div class="facklist-div">
+                    <ul id="facklist-ul"></ul>
+                </div>
+            </div>
+
+            <script>
+                //language select dropdown menu
+                var langArray = [];
+                $('.language-select option').each(function () {
+                    var img = $(this).attr("data-thumbnail");
+                    var text = this.innerText;
+                    var value = $(this).val();
+                    var item = '<li><img src="' + img + '" alt="" value="' + value + '"/><span>' + text + '</span></li>';
+                    langArray.push(item);
+                })
+
+                $('#facklist-ul').html(langArray);
+
+                //Set the button value to the first el of the array
+                $('.btn-select').html(langArray[0]);
+                $('.btn-select').attr('value', 'en');
+
+                //change button stuff on click
+                $('#facklist-ul li').click(function () {
+                    var img = $(this).find('img').attr("src");
+                    var value = $(this).find('img').attr('value');
+                    var text = this.innerText;
+                    var item = '<li><img src="' + img + '" alt="" /><span>' + text + '</span></li>';
+                    $('.btn-select').html(item);
+                    $('.btn-select').attr('value', value);
+                    $(".facklist-div").toggle();
+                    //console.log(value);
+                });
+
+                $(".btn-select").click(function () {
+                    $(".facklist-div").toggle();
+                });
+
+                //check local storage for the lang
+                var sessionLang = localStorage.getItem('lang');
+                if (sessionLang) {
+                    //find an item with value of sessionLang
+                    var langIndex = langArray.indexOf(sessionLang);
+                    $('.btn-select').html(langArray[langIndex]);
+                    $('.btn-select').attr('value', sessionLang);
+                } else {
+                    var langIndex = langArray.indexOf('ch');
+                    console.log(langIndex);
+                    $('.btn-select').html(langArray[langIndex]);
+                    //$('.btn-select').attr('value', 'en');
+                }
+            </script>
+
+        </header>
+
+        <div class="main-section expand-left-menu">
+            <div class="left-menu">
+                <ul>
+                    <li class="active"><a href="#"><span><i class="fa fa-tachometer"></i></span> Dashboard</a></li>
+                    <li class="set"><a href="#" class="active"><span><i class="fa fa-wrench"></i></span> Manage <i
+                                class="fa fa-angle-up"></i></a>
+                        <ul class="content" style="display: block;">
+                            <li><a href="#"><span><i class="fa fa-print"></i></span> Printer </a></li>
+                            <li><a href="#"><span><i class="fa fa-files-o"></i></span> files </a></li>
+                            <li><a href="#"><span><i class="fa fa-envelope-o"></i></span> Email job </a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><span><i class="fa fa-exclamation-triangle"></i></span> Alerts</a></li>
+                </ul>
+                <script>
+                    //left menu accordion
+                    $(document).ready(function () {
+                        $(".set > a").on("click", function () {
+                            if ($(this).hasClass("active")) {
+                                $(this).removeClass("active");
+                                $(this)
+                                    .siblings(".content")
+                                    .slideUp(200);
+                                $(".set > a > i")
+                                    .removeClass("fa-angle-up")
+                                    .addClass("fa-angle-down");
+                            } else {
+                                $(".set > a > i")
+                                    .removeClass("fa-angle-up")
+                                    .addClass("fa-angle-down");
+                                $(this)
+                                    .find("i.fa-angle-down")
+                                    .removeClass("fa-angle-down")
+                                    .addClass("fa-angle-up");
+                                $(".set > a").removeClass("active");
+                                $(this).addClass("active");
+                                $(".content").slideUp(200);
+                                $(this)
+                                    .siblings(".content")
+                                    .slideDown(200);
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <div class="main-content">
+                <h2>Dashboard</h2>
+                <div class="dashboard-content">
+                    <div class="card-section">
+                        <h3>Prenter Management</h3>
+                        <div class="card-cont-round">
+                            <span class="round-box-icon bg-green"><i class="fa fa-check"></i></span>
+                            <span class="number-style-1">5</span>
+                            <span class="caption">Ready</span>
+                        </div>
+                        <div class="card-cont-round">
+                            <span class="round-box-icon bg-red"><i class="fa fa-lock"></i></span>
+                            <span class="number-style-2">5</span>
+                            <span class="caption">Lucked</span>
+                        </div>
+
+                        <div class="card-foot">Total Printers: 10</div>
+                    </div>
+                    <div class="card-section">
+                        <h3>Email Job Management</h3>
+                        <div class="card-cont-round">
+                            <span class="round-box-icon bg-blue"><i class="fa fa-check"></i></span>
+                            <span class="number-style-3">8</span>
+                            <span class="caption">Enabled</span>
+                        </div>
+                        <div class="card-cont-round">
+                            <span class="round-box-icon bg-gray"><i class="fa fa-lock"></i></span>
+                            <span class="number-style-3">10</span>
+                            <span class="caption">disabled</span>
+                        </div>
+
+                        <div class="card-foot">Total Email Jobs: 18</div>
+                    </div>
+                    <div class="card-section">
+                        <h3>File Alerts</h3>
+                        <div class="card-alert-box critical">
+                            <span class="round-box-icon bg-orange"><i class="fa fa-exclamation"></i></span>
+                            <span class="number-style">3</span>
+                            <span class="caption">Critical</span>
+                        </div>
+                        <div class="card-alert-box major">
+                            <span class="round-box-icon bg-orange"><i class="fa fa-bar-chart"></i></span>
+                            <span class="number-style">1</span>
+                            <span class="caption">Major</span>
+                        </div>
+                        <div class="card-foot">Total Alerts: 4</div>
+                    </div>
+                    <div class="card-section">
+                        <h3>File Management</h3>
+                        <div class="card-cont-round">
+                            <span class="round-box-icon bg-orange"><i class="fa fa-check"></i></span>
+                            <span class="number-style-4">5</span>
+                            <span class="caption">Files</span>
+                        </div>
+
+                        <div class="card-foot">Total Files: 5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-menu">
+                <div class="right-menu-btn btn2"><i class="fa fa-exclamation-circle"></i></div>
+                <div class="right-menu-btn btn1"><i class="fa fa-cog"></i></div>
+                
+                <div class="right-menu-info">
+                    <h2>Info Panel</h2>
+                    <div class="right-menu-content">
+                        <h3>Dashboard</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                        <ul>
+                            <li>Simply dummy</li>
+                            <li>Printing and</li>
+                        </ul>
+                        <h3>Details View</h3>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour,</p>
+                        <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                        <h3>Printer Management</h3>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour,</p>
+                        <h3>File Management</h3>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour,</p>
+                        
+                    </div>
+
+                </div>
+                <script>
+                    //right menu expand
+                    $(document).ready(function () {
+                        $(".right-menu-btn").on("click", function () {
+                            $(".main-section").toggleClass("expand-right-menu");
+                            $(this).toggleClass("active");
+                        });
+                    });
+                </script>
+
+            </div>
+        </div>
+        <footer class="footer">
+            <img src="images/logo.png" alt="" class="footer-logo">
+            <p class="copy-rt">Copyright &copy; Unisys 2021</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
